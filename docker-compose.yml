@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    ports:
+      - 8009:5432
+    env_file:
+      - .env
+    volumes:
+      - pg:/var/lib/postgresql/data
+
+  node:
+    container_name: frank-students
+    build: .
+    ports:
+      - 5009:5000
+    depends_on:
+      - db
+    env_file:
+      - .env
+volumes:
+  pg:
